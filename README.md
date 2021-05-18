@@ -12,28 +12,13 @@ available at the following link:
 
 ## Data Availability
 
-The primary data source is the TransUnion credit bureau. 
-Data are provided to the Bank of Canada on a monthly basis. 
-Under the contractual agreement with TransUnion, 
-the data are not publicly available. 
-The Bank of Canada does, however, have a process for external researchers 
-to work with these data. 
-The Bank of Canada's Financial System Research Center 
-is a hub for research on household finance 
-(https://www.bankofcanada.ca/research/financial-system-research-centre/). 
-Interested parties, who are Canadian citizens or permanent residents, 
-can contact Jason Allen (Jallen@bankofcanada.ca) 
-or the Managing Director of research Jim MacGee (JMacGee@bankofcanada.ca).
-Interested parties are asked to submit a project proposal; 
-the proposal is evaluated by senior staff at the Bank of Canada for feasibility; 
-external researchers do not typically have direct access to the data 
-and must work with a Bank of Canada staff member. 
-An exception is if an external collaborator applies for 
-and is granted temporary employee status -- in this case, 
-the external researcher can access the data 
-so long as they have a Bank of Canada affiliation. 
-All research is vetted by Bank of Canada senior staff prior to publication. 
-
+The primary data source is annonymized consumer credit data from TransUnion&reg;. 
+Data are provided to the Bank of Canada on a monthly basis. Under the contractual agreement with TransUnion&reg;, the data are not publicly available. The Bank of Canada does, however, have a process for external researchers to work with these data. The Bank of Canada's [Financial System Research Center](https://www.bankofcanada.ca/research/financial-system-research-centre/) is a hub for research on household finance. Interested parties, who are Canadian citizens or permanent residents, 
+can contact the Managing Director of Economic and Financial Research ([Jim MacGee](https://www.bankofcanada.ca/profile/james-macgee/)) or Senior Rsearch Officer ([Jason Allen](https://www.bankofcanada.ca/profile/jason-allen/)).
+Interested parties are asked to submit a project proposal; the proposal is evaluated by senior officer at the Bank of Canada for feasibility; external researchers do not typically have direct access to the data 
+and must work with a Bank of Canada staff member. An exception is if an external collaborator applies for 
+and is granted temporary employee status -- in this case, the external researcher can access the data 
+so long as they have a Bank of Canada affiliation. All research is vetted by Bank of Canada senior officer prior to publication. 
 
 
 # Instructions:
@@ -42,15 +27,13 @@ The workflow proceeds in two stages:
 one set of instructions outlines the operations to transform the raw data in the 
 TransUnion database into the datasets that are the inputs for the statistical analysis
 in the next stage. 
-
+[Data Manipulation](#Data_Manipulation)
+[]()
+[]()
 
 ## Data Manipulation
 
-These procedures were performed 
-on the EDITH 2.0 computing cluster
-at the Bank of Canada
-to generate the primary datasets. 
-These scripts are stored in the ```Code/Data_Prep``` folder. 
+These procedures were performed on EDITH 2.0 high-performance computing cluster at the Bank of Canada's TransUnion&reg; dataset to generate the data of interest. These scripts are stored in the ```Code/Data_Prep``` folder. These python scripts require the use of [pyspark](https://spark.apache.org/docs/latest/api/python/) package running on [Apache Spark 2.3.0](https://spark.apache.org/).
 
 1. Run the SLURM script ```df_ind_bc.slurm```, 
   which runs a sequence of Python scripts ```cr_use_bc_Y1Y2.py```, 
@@ -689,154 +672,4 @@ running
 with base core clock speed of 560 MHz
 boost clocks from 562 MHz to 875 MHz, 
 and with a memory clock speed of 2.5 GHz on
-48 pieces of 256M × 16 GDDR5 SDRAM, 
-producing a memory bandwidth of 240GB/s per GPU. 
-
-For the queries that generated the datasets, 
-36 CPUs with 240 GB of memory were sufficient
-to create the datasets within at most 24 hours each. 
-
-
-### Statistical Analysis
-
-Once the datasets have been saved in the ```Data``` folder, 
-the remaining analysis, including the generation of all the tables
-and figures in the paper can be performed on a single microcomputer, 
-such as a laptop computer.
-The particular model of computer 
-on which the statistical analysis was run
-is a 
-Dell Precision 3520,
-running a 64-bit Windows 10 operating system, 
-with a 4-core x64-based processor,
-model Intel(R) Core(TM) i7-7820HQ CPU, 
-running at 2.90GHz, 
-with 16 GB of RAM.
-
-
-## Software
-
-### Data Manipulation
-
-The data manipulation was conducted using 
-a NoSQL dialect called Apache Spark, 
-which is based on the functional programming language Scala
-and was implemented with PySpark in Python. 
-The scripts were run using the 
-Anaconda 2 distribution, version 4.3.1, 
-with 
-Python version 2.7  and PySpark version 2.3.0.
-
-The batch jobs were submitted to the computing cluster using
-batch scheduling software called SLURM. 
-
-Other resources used to run the batch jobs include:
-- ```sbt```, version 1.3.6, which is a build tool for Scala, Java, among others
-- ```java```, version 1.8.0_141
-
-
-### Statistical Analysis
-
-The statistical analysis was conducted in R, version 4.0.2,
-which was released on June 22, 2020, 
-on a 64-bit Windows platform x86_64-w64-mingw32/x64. 
-
-The attached packages include the following:
-
-- ```data.table```, version 1.13.0 (using 4 threads), to handle the main data table for analysis in the ```_prelim.R``` and ```_estim.R``` scripts. 
-
-- ```xtable```, version 1.8-4, to generate LaTeX tables for Tables 1, 2, and 3.
-
-- ```plot3D```, version 1.3, to produce a 3-D bar chart of transition frequency, which created the plots in Figure 3.
-
-- ```MASS```, version 7.3-51.6, was also used to estimate the smoothed surface of the transition density as an alternative to that in Figure 3 but was not included in the paper. 
-
-The creation of other figures, including Figures A1.1 and A1.2, 
-required the following packages for data manipulation and graphics:
-- ```openxlsx```, version 4.2.3
-- ```dplyr```, version 1.0.5
-- ```lubridate```, version 1.7.10
-- ```ggplot2```, version 3.3.3
-- ```ggpubr```, version 0.4.0
-- ```ggthemes```, version 4.2.4
-- ```Cairo```, version 1.5-12.2
-
-
-Upon attachment of the above packages, 
-the following packages were loaded via a namespace, but not attached,
-with the following versions:
-
-- ```Rcpp``` version 1.0.5
-- ```lattice``` version 0.20-41
-- ```grid``` version 4.0.2
-- ```DTMCPack``` version 0.1-2
-- ```stats4``` version 4.0.2
-- ```magrittr``` version 1.5
-- ```RcppParallel``` version 5.0.2
-- ```misc3d``` version 0.8-4
-- ```markovchain``` version 0.8.5-3
-- ```Matrix``` version 1.2-18
-- ```tools``` version 4.0.2
-- ```igraph``` version 1.2.6
-- ```parallel``` version 4.0.2
-- ```compiler``` version 4.0.2
-- ```pkgconfig``` version 2.0.3
-- ```matlab``` version 1.0.2
-- ```nnet``` version 7.3-14
-- ```expm``` version 0.999-5  
-- ```zip``` version 2.1.1
-- ```cellranger``` version 1.1.0
-- ```pillar``` version 1.6.0
-- ```forcats``` version 0.5.1
-- ```lifecycle``` version 1.0.0
-- ```tibble``` version 3.1.0
-- ```gtable``` version 0.3.0
-- ```rlang``` version 0.4.10
-- ```curl``` version 4.3
-- ```haven``` version 2.3.1
-- ```rio``` version 0.5.26
-- ```stringr``` version 1.4.0
-- ```withr``` version 2.4.2       
-- ```hms``` version 1.0.0        
-- ```generics``` version 0.1.0    
-- ```vctrs``` version 0.3.7       
-- ```grid``` version 4.0.5        
-- ```tidyselect``` version 1.1.0  
-- ```glue``` version 1.4.2       
-- ```R6``` version 2.5.0          
-- ```rstatix``` version 0.7.0     
-- ```fansi``` version 0.4.2       
-- ```readxl``` version 1.3.1      
-- ```foreign``` version 0.8-81    
-- ```carData``` version 3.0-4    
-- ```purrr``` version 0.3.4       
-- ```tidyr``` version 1.1.3       
-- ```car``` version 3.0-10        
-- ```scales``` version 1.1.1      
-- ```backports``` version 1.2.1  
-- ```ellipsis``` version 0.3.1    
-- ```abind``` version 1.4-5       
-- ```colorspace``` version 2.0-0  
-- ```ggsignif``` version 0.6.1    
-- ```utf8``` version 1.2.1        
-- ```stringi``` version 1.5.3    
-- ```munsell``` version 0.5.0     
-- ```broom``` version 0.7.6       
-- ```crayon``` version 1.4.1
-
-
-## References
-
-- Trade-Level Database, Run Dates 2017-01-01 to 2020-09-01, 
-  TransUnion, accessed October 2020.
-- Consumer Risk Characteristics Database, Run Dates 2017-01-01 to 2020-09-01, 
-  TransUnion, accessed October 2020.
-- Estimates of population (2016 Census and administrative data), by age group 
-  and sex for July 1st, Canada, provinces, territories, 
-    health regions (2018 boundaries) and peer groups, Table: 17-10-0134-01, 
-    Statistics Canada, accessed June 2020. 
-- The Nilson Report, April 2020, Issue 1173, HSN Consultants, Inc., 
-url: https://nilsonreport.com/publication_newsletter_archive_issue.php?issue=1173
-- Chartered bank selected assets: Month-end (formerly C1), Credit cards, 
-  Bank of Canada, accessed June 2020. 
-
+48 pieces of 256M 
